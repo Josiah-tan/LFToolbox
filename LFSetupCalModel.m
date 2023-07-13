@@ -31,16 +31,25 @@ switch( CameraModel )
 end
 
 switch( DistortionModel )
+	case '2DCustom'
+		CalOptions.Fn_DistortRay = @D2D_DistortRay;
+		CalOptions.Fn_UndistortRay = @D2D_UndistortRay;
+		CalOptions.Fn_DistortInit = @D2D_Init;
 	case '2DNoBias'
 		CalOptions.Fn_DistortRay = @D2D_DistortRay;
 		CalOptions.Fn_UndistortRay = @D2D_UndistortRay;
 		CalOptions.Fn_DistortInit = @D2D_Init;
-		CalOptions.DistortionModel.ParamsToOpt = 1:3;		
+		CalOptions.DistortionModel.Model = 'multiplication';
+		CalOptions.DistortionModel.RadialParamsToOpt = 3;
+		CalOptions.DistortionModel.AddBias = false;
 	case '2DWithBias'
 		CalOptions.Fn_DistortRay = @D2D_DistortRay;
 		CalOptions.Fn_UndistortRay = @D2D_UndistortRay;
 		CalOptions.Fn_DistortInit = @D2D_Init;
-		CalOptions.DistortionModel.ParamsToOpt = 1:5;
+		CalOptions.DistortionModel.Model = 'multiplication';
+		CalOptions.DistortionModel.RadialParamsToOpt = 3;
+		CalOptions.DistortionModel.AddBias = true;
 	otherwise
 		error('Unrecognised distortion model name');
 end
+
