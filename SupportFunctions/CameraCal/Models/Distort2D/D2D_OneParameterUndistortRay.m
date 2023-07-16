@@ -33,10 +33,8 @@ function Ray = D2D_OneParameterUndistortRay( Ray, CameraModel, Options )
 				if delta > 0
 					ru = nthroot(-q ./ 2 + sqrt(delta), 3) + nthroot(-q ./ 2 - sqrt(delta), 3);
 				elseif delta == 0
-					disp(delta)
 					ru = 3 .* q ./ p;
 				else
-					disp(delta)
 					ru = 2 .* sqrt(-p ./ 3) .* cos(1 ./ 3 .* acos(3 .* q ./ (2 * p) .* sqrt(-3 ./ p)) - 2 * pi / 3);
 				end
 				ru_row(1, index) = ru;
