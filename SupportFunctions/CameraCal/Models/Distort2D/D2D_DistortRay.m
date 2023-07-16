@@ -16,7 +16,16 @@ function Ray = D2D_DistortRay( Ray, CameraModel, Options )
 		for idx = 1:length(Distortion.Radial)
 			Accumulator = Accumulator + Distortion.Radial(idx) * DirectionR2.^idx;
 		end
-		Direction = Direction .* repmat(Accumulator, 2, 1);
+		
+		switch( DistortionModel.Model )
+			case 'multiplication'
+				Direction = Direction .* repmat(Accumulator, 2, 1);
+			case 'division'
+				Direction = Direction ./ repmat(Accumulator, 2, 1);
+			otherwise
+				error('Unrecognised distortion model');
+		end
+		
 		Direction = bsxfun(@plus, Direction, Distortion.Bias');
 		Ray(3:4,:) = Direction;
 	end

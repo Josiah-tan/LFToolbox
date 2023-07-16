@@ -18,9 +18,16 @@ function Ray = D2D_UndistortRay( Ray, CameraModel, Options )
 		DirectionR2 = sum(Direction.^2);
 		Accumulator = 1;
 		for idx = 1:length(Distortion.Radial)
-			Accumulator = Accumulator + Distortion.Radial(idx) *DirectionR2.^idx;
+			Accumulator = Accumulator + Distortion.Radial(idx) * DirectionR2.^idx;
 		end
-		Direction = OriginalDirection ./ repmat(Accumulator, 2, 1);
+		switch( DistortionModel.Model )
+			case 'multiplication'
+				Direction = OriginalDirection ./ repmat(Accumulator, 2, 1);
+			case 'division'
+				Direction = OriginalDirection .* repmat(Accumulator, 2, 1);
+			otherwise
+				error('Unrecognised distortion model');
+		end
 	end
 	
 	Direction = bsxfun(@plus, Direction, Distortion.Bias');
