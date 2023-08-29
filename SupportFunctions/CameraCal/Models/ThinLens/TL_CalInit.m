@@ -224,6 +224,8 @@ PhysicalParams.LFSize = LFSize;
 PhysicalParams.ResampRate = LFMetadata.DecodeOptions.OutputScale;
 % todo : check resamprate is correctly reflecting the dehexing
 
+% EstCamIntrinsicsH = TL_PhysicalParamsToIntrins(PhysicalParams);
+% EstCamIntrinsicsH = LFRecenterIntrinsics( EstCamIntrinsicsH, LFSize );
 %---
 
 %---Start with no distortion estimate---
